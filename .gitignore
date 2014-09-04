@@ -1,4 +1,6 @@
+.idea/
 target/
+pdf-analysis.iml
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.next
