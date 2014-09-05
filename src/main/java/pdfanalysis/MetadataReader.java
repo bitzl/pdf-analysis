@@ -1,5 +1,7 @@
 package pdfanalysis;
 
+import org.apache.pdfbox.cos.COSDocument;
+import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.preflight.parser.PreflightParser;
 import pdfanalysis.model.PdfInfo;
 
@@ -18,12 +20,17 @@ public class MetadataReader {
         FileDataSource fd = new FileDataSource(pdfFile);
         PreflightParser parser = new PreflightParser(fd);
         parser.parse();
-        String producer = parser.getPDDocument().getDocumentInformation().getProducer();
+        PDDocument document = parser.getPDDocument();
+        String producer = document.getDocumentInformation().getProducer();
+        document.close();
         if (producer != null) {
             result.setCreationSW(producer);
         }
         result.setFilename(pdfFile.getName());
-        result.setVersion(Float.toString(parser.getDocument().getVersion()));
+        COSDocument cosDocument = parser.getDocument();
+        result.setVersion(Float.toString(cosDocument.getVersion()));
+        cosDocument.close();
+        document.close();
         return result;
     }
 
