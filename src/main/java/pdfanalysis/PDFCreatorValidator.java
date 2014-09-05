@@ -1,8 +1,6 @@
 package pdfanalysis;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.filefilter.SuffixFileFilter;
-import org.apache.commons.io.filefilter.TrueFileFilter;
 import pdfanalysis.export.CSV;
 import pdfanalysis.export.InfoWriter;
 import pdfanalysis.model.PdfInfo;
@@ -23,8 +21,8 @@ public class PDFCreatorValidator {
         String sourcePath = PdfUtilities.chooseFolder();
 
         File sourceFolder = new File(sourcePath);
-        Iterator<File> pdfFiles = (Iterator<File>) FileUtils.iterateFiles(sourceFolder, TrueFileFilter.INSTANCE,
-                new SuffixFileFilter(".pdf"));
+        String[] extensions = { "pdf" };
+        Iterator<File> pdfFiles = FileUtils.iterateFiles(sourceFolder, extensions, true);
 
 
         FileWriter writer = new FileWriter(csvFilename);
